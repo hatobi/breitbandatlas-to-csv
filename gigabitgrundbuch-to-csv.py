@@ -25,15 +25,12 @@ def process_sheet(sheet):
     df = df[1:]
     df.columns = new_header
 
-    # Remove columns A to C
-    df = df.iloc[:, 3:]
-
     return df
 
 def convert_excel_to_csv(file_path):
     workbook = openpyxl.load_workbook(file_path)
 
-    for sheet_name in workbook.sheetnames[1:]:
+    for sheet_name in workbook.sheetnames[1:]: # Skip the first sheet
         df = process_sheet(workbook[sheet_name])
         csv_file_path = f'{sheet_name}.csv'
         df.to_csv(csv_file_path, index=False)
